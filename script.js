@@ -18,6 +18,8 @@ let boundingBoxLayer = null;
 const boundingBoxToggle = document.getElementById('boundingBoxToggle');
 const coordinatesDiv = document.getElementById('coordinates');
 const coordinateList = document.getElementById('coordinateList');
+const apiStatusDiv = document.getElementById('apiStatus');
+const apiStatusText = document.getElementById('apiStatusText');
 
 // Initialize the map
 map.on('load', function() {
@@ -233,6 +235,9 @@ function finalizeBoundingBox(start, end) {
     
     // Show coordinates div
     coordinatesDiv.classList.add('show');
+    
+    // Send API call with bounding box coordinates
+    sendBoundingBoxToAPI(start, end);
 }
 
 function clearBoundingBox() {
@@ -245,6 +250,9 @@ function clearBoundingBox() {
     // Hide coordinates div
     coordinatesDiv.classList.remove('show');
     coordinateList.innerHTML = '';
+    
+    // Hide API status
+    apiStatusDiv.style.display = 'none';
     
     boundingBoxSource = null;
 }
@@ -280,6 +288,64 @@ function displayCoordinates(coordinates) {
         Height: ${height.toFixed(6)}° latitude
     `;
     coordinateList.appendChild(dimensionsDiv);
+}
+
+function sendBoundingBoxToAPI(start, end) {
+    // Calculate min/max coordinates for the bounding box
+    const minLng = Math.min(start.lng, end.lng);
+    const maxLng = Math.max(start.lng, end.lng);
+    const minLat = Math.min(start.lat, end.lat);
+    const maxLat = Math.max(start.lat, end.lat);
+    
+    // Create the dataset object with bounding box coordinates
+    const dataset = {
+        title: "NSI building inventory dataset",
+        description: "Example description",
+        bounding_box: [minLat, minLng, maxLat, maxLng] // [minY, minX, maxY, maxX] format
+    };
+    
+    console.log('Sending bounding box to API:', dataset);
+    
+    // Show API status
+    apiStatusDiv.style.display = 'block';
+    apiStatusDiv.className = 'api-status';
+    apiStatusText.textContent = 'Sending bounding box to API...';
+    
+    // Create FormData for the API call
+    const formData = new FormData();
+    formData.append('dataset', JSON.stringify(dataset));
+    formData.append('type', 'application/json');
+    
+    // Make the API call
+    fetch('https://tools.in-core.org/data/api/datasets/tools/bldg-inventory', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'bearer with token' // You'll need to replace this with actual token
+        },
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('API call successful:', data);
+        apiStatusDiv.className = 'api-status success';
+        apiStatusText.textContent = 'API call successful! Dataset created.';
+    })
+    .catch(error => {
+        console.error('API call failed:', error);
+        apiStatusDiv.className = 'api-status error';
+        
+        // Handle CORS errors specifically
+        if (error.message.includes('CORS') || error.message.includes('Failed to fetch')) {
+            apiStatusText.textContent = 'API call blocked by CORS policy. This is expected when running from a local file.';
+        } else {
+            apiStatusText.textContent = `API call failed: ${error.message}`;
+        }
+    });
 }
 
 // Handle window resize

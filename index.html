@@ -77,6 +77,26 @@
             margin-top: 10px;
             font-style: italic;
         }
+        
+        .api-status {
+            background: #f0f8ff;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 12px;
+            margin-top: 10px;
+            border-left: 3px solid #007acc;
+        }
+        
+        .api-status.success {
+            background: #f0fff0;
+            border-left-color: #28a745;
+        }
+        
+        .api-status.error {
+            background: #fff0f0;
+            border-left-color: #dc3545;
+        }
     </style>
 </head>
 <body>
@@ -93,6 +113,11 @@
         <div class="coordinates" id="coordinates">
             <strong>Bounding Box Coordinates:</strong>
             <div id="coordinateList"></div>
+        </div>
+        
+        <div class="api-status" id="apiStatus" style="display: none;">
+            <strong>API Status:</strong>
+            <div id="apiStatusText"></div>
         </div>
         
         <div class="instructions">

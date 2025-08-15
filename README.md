@@ -50,6 +50,7 @@ Then open your browser and go to: `http://localhost:8000`
    - Click and drag on the map to draw a rectangular bounding box
    - The bounding box will appear in red color
 3. **View Coordinates**: After drawing a bounding box, the coordinates of all four corners will be displayed in the control panel
+4. **API Integration**: When a bounding box is drawn, the application automatically sends the coordinates to the building inventory API
 
 ## Technical Details
 
@@ -79,10 +80,25 @@ This application works in all modern browsers that support WebGL:
 
 The application uses CDN-hosted MapLibre GL JS library, so no local installation is required. All dependencies are loaded automatically when you open the HTML file.
 
+## API Configuration
+
+The application automatically sends bounding box coordinates to the building inventory API when a bounding box is drawn. To configure the API:
+
+1. **Update Authorization Token**: In `script.js`, replace `'bearer with token'` with your actual authorization token on line 295
+2. **API Endpoint**: The default endpoint is `https://tools.in-core.org/data/api/datasets/tools/bldg-inventory`
+3. **Bounding Box Format**: Coordinates are sent as `[minLat, minLng, maxLat, maxLng]` format
+
+### CORS Limitation
+
+**Note**: Due to CORS (Cross-Origin Resource Sharing) policies, the API calls may be blocked when running the application from a local file (`file://` protocol). This is a browser security feature. The application will show a user-friendly error message when this occurs.
+
+To avoid CORS issues, run the application using one of the HTTP server options listed in the "Starting the Application" section above.
+
 ## Customization
 
 You can customize the application by modifying:
 - Map style URL in `script.js` (line 3)
 - Map center coordinates and zoom level in `script.js` (lines 4-6)
 - Bounding box color in `script.js` (lines 175 and 185)
+- API endpoint and authorization in `script.js` (lines 295-296)
 - UI styling in the `<style>` section of `index.html` 
