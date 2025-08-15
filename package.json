@@ -1,0 +1,26 @@
+{
+  "name": "us-map-bounding-box",
+  "version": "1.0.0",
+  "description": "A web application with MapLibre GL JS for drawing bounding boxes on US maps",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "npx http-server -p 8000"
+  },
+  "keywords": [
+    "maplibre",
+    "map",
+    "bounding-box",
+    "geospatial",
+    "webapp"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {},
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+} 
