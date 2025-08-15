@@ -4,7 +4,7 @@ A web application built with MapLibre GL JS that displays an interactive map of 
 
 ## Features
 
-1. **Interactive US Map**: Shows a detailed map of the United States with streets, cities, and geographic information
+1. **Interactive US Map**: Shows a detailed map focused on Champaign, Illinois area with streets, cities, and geographic information
 2. **Navigation Controls**: Zoom in/out, pan, and navigate the map
 3. **Bounding Box Drawing**: Draw rectangular bounding boxes on the map
 4. **Coordinate Display**: View the coordinates of all four corners of the bounding box
@@ -99,7 +99,7 @@ To avoid CORS issues, run the application using one of the HTTP server options l
 
 You can customize the application by modifying:
 - Map style URL in `script.js` (line 3)
-- Map center coordinates and zoom level in `script.js` (lines 4-6)
+- Map center coordinates and zoom level in `script.js` (lines 4-6) - Currently set to Champaign, Illinois
 - Bounding box color in `script.js` (lines 175 and 185)
 - API endpoint and authorization in `script.js` (lines 295-296)
 - UI styling in the `<style>` section of `index.html` 

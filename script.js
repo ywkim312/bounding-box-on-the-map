@@ -2,8 +2,8 @@
 const map = new maplibregl.Map({
     container: 'map',
     style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json', // Clean, detailed map style
-    center: [-98.5795, 39.8283], // Center of United States
-    zoom: 4, // Zoom level to show most of the US
+    center: [-88.2272, 40.1164], // Champaign, Illinois coordinates
+    zoom: 10, // Zoom level to show broader Champaign area
     maxZoom: 18,
     minZoom: 2
 });
