@@ -236,8 +236,8 @@ function finalizeBoundingBox(start, end) {
     // Show coordinates div
     coordinatesDiv.classList.add('show');
     
-    // Send API call with bounding box coordinates
-    sendBoundingBoxToAPI(start, end);
+    // Show confirmation dialog
+    showConfirmationDialog(start, end);
 }
 
 function clearBoundingBox() {
@@ -288,6 +288,31 @@ function displayCoordinates(coordinates) {
         Height: ${height.toFixed(6)}° latitude
     `;
     coordinateList.appendChild(dimensionsDiv);
+}
+
+function showConfirmationDialog(start, end) {
+    // Calculate min/max coordinates for display
+    const minLng = Math.min(start.lng, end.lng);
+    const maxLng = Math.max(start.lng, end.lng);
+    const minLat = Math.min(start.lat, end.lat);
+    const maxLat = Math.max(start.lat, end.lat);
+    
+    const message = `Would you like to create a dataset with this bounding box?\n\n` +
+                   `Bounding Box Coordinates:\n` +
+                   `Min Lat: ${minLat.toFixed(6)}\n` +
+                   `Min Lng: ${minLng.toFixed(6)}\n` +
+                   `Max Lat: ${maxLat.toFixed(6)}\n` +
+                   `Max Lng: ${maxLng.toFixed(6)}`;
+    
+    if (confirm(message)) {
+        // User clicked "OK" - proceed with API call
+        sendBoundingBoxToAPI(start, end);
+    } else {
+        // User clicked "Cancel" - just show the coordinates without API call
+        console.log('User cancelled dataset creation');
+        // Hide any existing API status
+        apiStatusDiv.style.display = 'none';
+    }
 }
 
 function sendBoundingBoxToAPI(start, end) {

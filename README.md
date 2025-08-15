@@ -50,7 +50,8 @@ Then open your browser and go to: `http://localhost:8000`
    - Click and drag on the map to draw a rectangular bounding box
    - The bounding box will appear in red color
 3. **View Coordinates**: After drawing a bounding box, the coordinates of all four corners will be displayed in the control panel
-4. **API Integration**: When a bounding box is drawn, the application automatically sends the coordinates to the building inventory API
+4. **Dataset Creation**: A confirmation dialog will appear asking if you want to create a dataset with the drawn bounding box
+5. **API Integration**: If confirmed, the application sends the coordinates to the building inventory API
 
 ## Technical Details
 
